@@ -3,10 +3,15 @@ const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 const express = require('express');
 const app = express();
 
+app.use(express.json());
+
 app.post('/create-checkout-session', async (req, res) => {
   const userAmount = req.body.amount;
 
-  // Convert dollars to cents for Stripe
+  if (!userAmount || isNaN(userAmount) || userAmount < 1 || userAmount > 1000) {
+    return res.status(400).json({ error: 'Invalid payment amount. dont be a dickhead has to be atleast $1' });
+  }
+
   const amountInCents = Math.round(userAmount * 100);
 
   const session = await stripe.checkout.sessions.create({
