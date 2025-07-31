@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Virtuous High</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(to right, #111, #444);
+      font-family: 'Segoe UI', sans-serif;
+      color: white;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.05);
+      padding: 2rem;
+      border-radius: 12px;
+      backdrop-filter: blur(10px);
+    }
+
+    input[type="number"] {
+      padding: 1rem;
+      margin-bottom: 1rem;
+      width: 200px;
+      border: none;
+      border-radius: 8px;
+      font-size: 1.2rem;
+      text-align: center;
+      background-color: #222;
+      color: white;
+    }
+
+    button {
+      padding: 1rem 2rem;
+      border: none;
+      border-radius: 8px;
+      font-size: 1.2rem;
+      background: #00d4ff;
+      color: #111;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background: #00aacc;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <input type="number" id="amount" placeholder="Enter amount (USD)" min="1" />
+    <button onclick="pay()">Enter</button>
+  </div>
+
+  <script>
+    async function pay() {
+      const amount = document.getElementById("amount").value;
+      if (!amount || amount < 1) return alert("Please enter a valid amount.");
+
+      const response = await fetch("/create-checkout-session", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ amount })
+      });
+
+      const data = await response.json();
+      const stripe = Stripe("pk_live_51RaokBJCVXlgPpNuwiG15WxkpQvC5Lpehhk6uWoe3RT9a7CEJQlrxa2RbHpfy9dQbg0EOkNGUj9o0M6dfm4Ak97w00ewhIh4Rf");
+      stripe.redirectToCheckout({ sessionId: data.id });
+    }
+  </script>
+</body>
+</html>
