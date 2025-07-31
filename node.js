@@ -1,8 +1,14 @@
-const stripe = require('stripe')('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');
+require('dotenv').config({ path: './secret.env' });
+const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 const express = require('express');
 const app = express();
 
 app.post('/create-checkout-session', async (req, res) => {
+  const userAmount = req.body.amount;
+
+  // Convert dollars to cents for Stripe
+  const amountInCents = Math.round(userAmount * 100);
+
   const session = await stripe.checkout.sessions.create({
     payment_method_types: ['card'],
     line_items: [{
@@ -11,13 +17,13 @@ app.post('/create-checkout-session', async (req, res) => {
         product_data: {
           name: 'Cool Thing',
         },
-        unit_amount: 2000,
+        unit_amount: amountInCents,
       },
       quantity: 1,
     }],
     mode: 'payment',
     success_url: 'https://virtuoushighpurchase.com/success',
-    cancel_url: 'https://virtuoushighpurchase/cancel',
+    cancel_url: 'https://virtuoushighpurchase.com/cancel',
   });
 
   res.json({ id: session.id });
