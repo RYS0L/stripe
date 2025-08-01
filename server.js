@@ -38,6 +38,10 @@ app.post('/create-checkout-session', async (req, res) => {
   }
 });
 
+app.get('/test-cors', (req, res) => {
+  res.json({ message: "CORS is working!" });
+});
+
 app.use(express.static('.')); // Serves your index.html
 
 app.listen(3000, () => console.log('Server running on http://localhost:3000'));
