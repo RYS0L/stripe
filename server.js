@@ -26,12 +26,7 @@ app.post('/create-checkout-session', async (req, res) => {
       success_url: 'https://www.virtuoushighpurchase.com/success.html',
       cancel_url: 'https://www.virtuoushighpurchase.com/cancel.html',
     });
-    const response = await fetch("https://stripe-frv9.onrender.com/create-checkout-session", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ amount })
-    });
-    res.json({ id: session.id });
+    res.json({ id: session.id }); // <-- Just return the session id here
   } catch (err) {
     res.status(500).json({ error: err.message });
   }

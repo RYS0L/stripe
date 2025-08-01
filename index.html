@@ -65,7 +65,7 @@
       const amount = document.getElementById("amount").value;
       if (!amount || amount < 1) return alert("Please enter a valid amount.");
 
-      const response = await fetch("/create-checkout-session", {
+      const response = await fetch("https://stripe-frv9.onrender.com/create-checkout-session", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ amount })
