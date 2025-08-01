@@ -1,5 +1,6 @@
-require('dotenv').config({ path: './secret.env' });
-const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+require('dotenv').config({ override: true });
+const stripeLib = require('stripe');
+const stripe = new stripeLib(process.env.STRIPE_SECRET_KEY);
 const express = require('express');
 const app = express();
 
