@@ -17,14 +17,14 @@ app.post('/create-checkout-session', async (req, res) => {
       line_items: [{
         price_data: {
           currency: 'usd',
-          product_data: { name: 'UBEREAATS' },
+          product_data: { name: 'Virtuous High Purchase' },
           unit_amount: Math.round(Number(amount) * 100), // amount in cents
         },
         quantity: 1,
       }],
       mode: 'payment',
-      success_url: 'https://www.virtuoushighpurchase.com/success.html',
-      cancel_url: 'https://www.virtuoushighpurchase.com/cancel.html',
+      success_url: 'http://localhost:3000/success.html',
+      cancel_url: 'http://localhost:3000/cancel.html',
     });
     res.json({ id: session.id });
   } catch (err) {
