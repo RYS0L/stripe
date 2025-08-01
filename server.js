@@ -9,8 +9,9 @@ const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 app.use(cors({
   origin: [
     'https://www.virtuoushighpurchase.com',
-    'https://rys0l.github.io' // <-- Replace <RYS0L> with your actual GitHub username, all lowercase
-  ]
+    'https://rys0l.github.io.'
+  ],
+  optionsSuccessStatus: 200
 }));
 app.use(express.json());
 
