@@ -6,7 +6,12 @@ const app = express();
 require('dotenv').config({ path: './secret.env' });
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
-app.use(cors());
+app.use(cors({
+  origin: [
+    'https://www.virtuoushighpurchase.com',
+    'https://<RYS0L>.github.io'
+  ]
+}));
 app.use(express.json());
 
 app.post('/create-checkout-session', async (req, res) => {

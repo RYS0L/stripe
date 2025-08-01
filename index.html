@@ -65,6 +65,8 @@
       const amount = document.getElementById("amount").value;
       if (!amount || amount < 1) return alert("Please enter a valid amount.");
 
+      console.log("Sending payment request with amount:", amount);
+
       const response = await fetch("https://stripe-frv9.onrender.com/create-checkout-session", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -72,6 +74,8 @@
       });
 
       const data = await response.json();
+      console.log("Stripe session response:", data);
+
       const stripe = Stripe("pk_live_51RaokBJCVXlgPpNuwiG15WxkpQvC5Lpehhk6uWoe3RT9a7CEJQlrxa2RbHpfy9dQbg0EOkNGUj9o0M6dfm4Ak97w00ewhIh4Rf");
       stripe.redirectToCheckout({ sessionId: data.id });
     }
