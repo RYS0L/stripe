@@ -24,7 +24,7 @@ app.post('/create-checkout-session', async (req, res) => {
         price_data: {
           currency: 'usd',
           product_data: { name: 'UBEREAATS' },
-          unit_amount: Math.round(Number(amount) * 100), // amount in cents
+          unit_amount: Math.round(Number(amount) * 100), 
         },
         quantity: 1,
       }],
@@ -32,7 +32,7 @@ app.post('/create-checkout-session', async (req, res) => {
       success_url: 'https://www.virtuoushighpurchase.com/success.html',
       cancel_url: 'https://www.virtuoushighpurchase.com/cancel.html',
     });
-    res.json({ id: session.id }); // <-- Just return the session id here
+    res.json({ id: session.id });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -42,6 +42,8 @@ app.get('/test-cors', (req, res) => {
   res.json({ message: "CORS is working!" });
 });
 
-app.use(express.static('.')); // Serves your index.html
+app.use(express.static('.'));
 
-app.listen(3000, () => console.log('Server running on http://localhost:3000'));
+app.listen(process.env.PORT || 3000, () => {
+  console.log('Server running');
+});
